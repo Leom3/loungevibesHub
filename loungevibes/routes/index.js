@@ -1,11 +1,16 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
+var bcrypt = require('bcryptjs');
+
+var db = mongoose.connection;
 
 /*
 // '/' route that make sure we are connected, or redirect us to login page
 */
 
-router.get('/', ensureAuthenticated, function(req, res){
+router.get('/', ensureAuthenticated, function(req, res) {
 	res.render('index');
 });
 
@@ -13,7 +18,7 @@ router.get('/', ensureAuthenticated, function(req, res){
 // '/profile' route that make sure we are connected, or redirect us to login page
 */
 router.get('/profile', ensureAuthenticated, function(req, res) {
-  res.render('profile');
+	res.render('profile');
 })
 
 /*

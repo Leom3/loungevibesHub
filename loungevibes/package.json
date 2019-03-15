@@ -7,14 +7,33 @@
   },
   "dependencies": {
     "bluebird": "^3.5.3",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "ejs": "~2.5.7",
-    "express": "~4.16.0",
-    "http-errors": "~1.6.2",
-    "mongoose": "^5.4.18",
+    "cookie-parser": "~1.4.4",
+    "debug": "~4.1.1",
+    "ejs": "~2.6.1",
+    "express": "~4.16.4",
+    "http-errors": "~1.7.2",
+    "mongoose": "^5.4.19",
     "mongoose-paginate": "^5.0.3",
-    "morgan": "~1.9.0",
+    "morgan": "~1.9.1",
     "nodemon": "^1.18.10"
-  }
+  },
+  "description": "Hub project to play music as a DJ in the epitech's Lounge",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leom3/loungevibesHub.git"
+  },
+  "keywords": [
+    "CSS",
+    "JS",
+    "Angular",
+    "Node"
+  ],
+  "author": "Leo Maignan, Matthias Gayaud and Charly Dai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Leom3/loungevibesHub/issues"
+  },
+  "homepage": "https://github.com/Leom3/loungevibesHub#readme"
 }

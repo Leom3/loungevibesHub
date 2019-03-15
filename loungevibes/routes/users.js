@@ -27,12 +27,12 @@ passport.use (new LocalStrategy(
 );
 
 passport.serializeUser(function(user, done){
-  done(null, user.id);
+	done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
+	User.findById(id, function(err, user) {
+		done(err, user);
   });
 });
 
@@ -41,14 +41,14 @@ passport.deserializeUser(function(id, done) {
 */
 
 router.get('/register', function(req, res) {
-  res.render('register');
+	res.render('register');
 });
 
 /*
 // /login route that display login page
 */
 router.get('/login', function(req, res) {
-  res.render('login');
+	res.render('login');
 });
 
 /*

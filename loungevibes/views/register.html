@@ -1,28 +1,29 @@
 <!DOCTYPE html>
+<head>
+  <title>Loungevibes register</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel='stylesheet' href='/stylesheets/login.css' />
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
 <body>
-<form action="/users/register" method="post">
-    <div>
-        <label>Name:</label>
-        <input type="text" name="name"/>
+<div class="container d-flex justify-content-center">
+    <div>    
+        <form class="align-middle" action="/users/login" method="post" id="register">
+            Name:<br>
+            <input type="text" name="name"><br>
+            Username:<br>
+            <input type="text" name="username"><br>
+            Email:<br>
+            <input type="email" name="email"><br>
+            Password:<br>
+            <input type="password" name="password"><br>
+            Repeat Password: <br>
+            <input type="password" name="repeat_password"><br>
+            <input type="submit" name="button" value="Login" class="btn btn-info d-flex justify-content-center">
+        </form>
+        <div id="signup">
+            Already have an account ? <a href="/users/login">Login</a>
+        </div>
     </div>
-    <div>
-        <label>email</label>
-        <input type="text" name="email"/>
-    </div>
-    <div>
-        <label>Username</label>
-        <input type="text" name="username"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <label>Password validation:</label>
-        <input type="password" name="password2"/>
-    </div>
-    <div>
-        <input type="submit" value="Log In"/>
-    </div>
-</form>
+</div>
 </body>

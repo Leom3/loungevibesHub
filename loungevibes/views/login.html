@@ -1,16 +1,24 @@
 <!DOCTYPE html>
+<head>
+  <title>Loungevibes login</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel='stylesheet' href='/stylesheets/login.css' />
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
 <body>
-<form action="/users/login" method="post">
+<div class="container d-flex justify-content-center">
     <div>
-        <label>Username:</label>
-        <input type="text" name="username"/>
+        <img src="/images/logo.png" width="200" height="200">
+        <form class="align-middle" action="/users/login" method="post" id="login">
+            Email:<br>
+            <input type="email" name="email"><br>
+            Password: <br>
+            <input type="password" name="password"><br>
+            <input type="submit" name="button" value="Login" class="btn btn-info d-flex justify-content-center">
+        </form>
+        <div id="signup">
+            Don't have an account ? <a href="/users/register">Sign Up</a>
+        </div>
     </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <input type="submit" value="Log In"/>
-    </div>
-</form>
+</div>
 </body>

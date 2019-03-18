@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+body {
+	font-family: 'Montserrat';
+	background-image: url('../images/background_login.jpg');
+}
+
+img {
+	margin-top: 50px;
+	margin-left: 100px;
+}
+
+#login {
+	width: 400px;
+	padding: 25px 25px;
+	margin-top: 50px;
+	border-radius: 3px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: #F9F9F9;
+}
+
+#register {
+	width: 400px;
+	padding: 25px 25px;
+	margin-top: 150px;
+	border-radius: 3px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: #F9F9F9;
+}
+
+input[type="email"], input[type="password"], input[type="text"] {
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: 1px solid grey;
+	font-size: 15px;
+	padding: 10px 10px;
+}
+
+input[type="submit"] {
+	width: 60%;
+	margin-left: 20%;
+	margin-top: 15px;
+	font-size: 20px;
+}
+
+#signup {
+	margin-top: 15px;	
+	background-color: #F9F9F9;	
+	border-radius: 3px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 15px 15px;
+	text-align: center;
+}
+
+a {
+	font-weight: bold;
+}

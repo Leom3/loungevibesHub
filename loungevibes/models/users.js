@@ -19,6 +19,9 @@ var UserSchema = new Schema({
 	},
 	name: {
 		type: String
+	},
+	likes: {
+		type: String
 	}
 }, { usePushEach: true });
 

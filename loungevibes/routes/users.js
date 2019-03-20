@@ -118,7 +118,8 @@ router.post('/register', function(req, res) {
 							name: name,
 							email:email,
 							username: username,
-							password: password
+							password: password,
+							likes : "0"
 						});
 						User.createUser(newUser, function(err, user){
 							if(err) throw err;

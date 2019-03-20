@@ -14,8 +14,14 @@ var SongSchema = new Schema({
 	artist: {
 		type: String
 	},
+	album : {
+		type : String
+	},
 	genre: {
 		type: String
+	},
+	youtubeUrl : {
+		type : String
 	},
 	dj: {
 		type: String

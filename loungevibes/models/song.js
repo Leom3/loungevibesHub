@@ -20,7 +20,7 @@ var SongSchema = new Schema({
 	genre: {
 		type: String
 	},
-	youtubeUrl : {
+	youtubeId : {
 		type : String
 	},
 	dj: {

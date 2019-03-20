@@ -41,7 +41,7 @@ function addYoutubeUrl(newSong) {
 			return false;
 		}
 		if (data)
-			newSong.youtubeUrl = "https://www.youtube.com/watch?v=" + data.data.items[0].id.videoId;
+			newSong.youtubeId = data.data.items[0].id.videoId;
 		Song.addSongToPlaylist(newSong, function(err, song) {
 			if (err) {
 				throw err;
@@ -79,7 +79,7 @@ router.post('/addSong', function(req, res) {
 				genre : genre,
 				album : album,
 				dj : dj,
-				youtubeUrl : ""
+				youtubeId : ""
 			});
 			addYoutubeUrl(newSong);
 			res.json(success_json);

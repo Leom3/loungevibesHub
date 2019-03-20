@@ -9,7 +9,7 @@ const session = require('express-session');
 const passport = require('passport')
 const expressValidator = require('express-validator');
 
-var indexRouter = require('./routes/index');
+var homeRouter = require('./routes/home');
 var usersRouter = require('./routes/users');
 var playlistRouter = require('./routes/playlist')
 
@@ -62,7 +62,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/', indexRouter);
+app.use('/', homeRouter);
 app.use('/users', usersRouter);
 app.use('/playlist', playlistRouter);
 

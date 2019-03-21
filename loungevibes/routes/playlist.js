@@ -79,7 +79,8 @@ router.post('/addSong', function(req, res) {
 				genre : genre,
 				album : album,
 				dj : dj,
-				youtubeId : ""
+				youtubeId : "",
+				likes : "0"
 			});
 			addYoutubeUrl(newSong);
 			res.json(success_json);
@@ -121,11 +122,16 @@ router.get('/getPlaylist', function (req, res) {
     });
 });
 
+function addLikesToUser(data) {
+
+}
+
 router.post('/nextSong', function (req, res) {
 	if (db.collection("playlist").find()) {
 		db.collection("playlist").find().toArray(function (error, results) {
 			if (error) throw error;
-
+			console.log(req.user);
+			userLikes = results[0].likes;
 			Song.removeSongById(results[0]._id, function(err) {
 				if (err) {
 					throw err;

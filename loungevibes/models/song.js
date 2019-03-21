@@ -25,6 +25,9 @@ var SongSchema = new Schema({
 	},
 	dj: {
 		type: String
+	},
+	likes : {
+		type : String
 	}
 }, { usePushEach: true });
 

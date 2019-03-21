@@ -3,26 +3,51 @@
   <head>
     <title>Loungevibes Home</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel='stylesheet' href='../public/stylesheets/home.css' />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/home.css' />
     <link rel="icon" type="image/png" href="/images/logo.png">
   </head>
   <body>
-  	<div class="container">
+  	<div class="container" ng-app="lvApp" ng-controller="lvCtrl">
   		<div class="row">
   			<div class="col-8">
   				<div class="row">
-  					<div class="col mt-md-5 bg-white elem">dak</div>
+  					<div class="col mt-md-5 bg-white p-0 elem">
+  						<img src="/images/player.gif" id="player-gif"><span id="currentMusic"><br><br><br><br><br>PSY - GANGNAM STYLE(강남스타일) M/V</span>
+  						<div class="row">
+  							<div class="col-4 ml-5 mt-4">
+  								<i class="far fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-hide="isLiked"></i>
+  								<i class="fas fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-show="isLiked"></i> {{likeNb}}
+  								<i class="far fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-hide="isDisliked"></i>
+  								<i class="fas fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-show="isDisliked"></i> {{dislikeNb}}
+  							</div>
+	  						<div class="col-3"></div>
+	  						<div class="col-4"><button class="btn btn-primary mt-3" id="addSong"><i class="fas fa-plus"></i> Add Song</button></div>
+  						</div>
+  					</div>
   				</div>
   			</div>
   			<div class="col-4">
   				<div class="row">
   					<div class="col-lg-1 mt-xl-5"></div>
-  					<div class="col-12 col-md-11 mt-md-5 bg-white elem">Next song :<br><br>Luis Fonsi - Despacito ft. Daddy Yankee<br></div>
+  					<div class="col-12 col-md-11 mt-md-5 bg-white elem" id="playlist"><br>
+  						Next song :<br><br><span id="songs">Luis Fonsi - Despacito ft. Daddy Yankee<br></span>
+  					</div>
   				</div>
   			</div>
   		</div>
+  		<div id="myModal" class="modal">		
+	  		<div class="modal-content">
+	  			<span class="close">&times;</span>
+	  			Artist:<br>
+	  			<input type="text" name="artist">
+	  			Song name:<br>
+	  			<input type="text" name="song"><br>
+	  			<input type="submit" name="submit" value="Send" class="btn btn-primary">
+	  		</div>
+  		</div>
   	</div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script type="text/javascript" src="home.js"></script>
+    <script type="text/javascript" src="/js/home.js"></script>
   </body>
 </html>

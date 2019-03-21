@@ -28,6 +28,10 @@ var error_json = {
 	msg : "Failure"
 }
 
+router.get('/player', function(req, res) {
+	res.render('player');
+});
+
 function addYoutubeUrl(newSong) {
 	query = newSong.artist + " " + newSong.name;
 	console.log(query);

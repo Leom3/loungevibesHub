@@ -41,17 +41,6 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval) {
     window.clearInterval(intervalId)
   })
 
-  //$http({
-  //  method: 'GET',
-  //  url: '/playlist/getPlaylist'
-  //}).then(function successCallback(response) {
-  //    for (var id in response.data.data) {
-  //      videoId.push(response.data.data[id].youtubeId);
-  //    }
-  //  }, function errorCallback(response) {
-  //    console.log(response);
-  //  });
-
   function skipSong() {
     var promise = null;
     $http({

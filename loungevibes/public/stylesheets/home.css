@@ -11,6 +11,9 @@ audio {
 
 .elem {
 	height: 400px;
+}
+
+.subelem {
 	border-radius: 3px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -41,10 +44,22 @@ audio {
 	font-weight: bold;
 }
 
+#brow {
+	width: 100%;
+	margin: 0px 0px;
+	padding-bottom: 25px;
+}
+
+#addSongw {
+	padding: 0px 0px;
+}
+
 #addSong {
 	font-size: 25px;
 	border-radius: 50px;
 	padding: 10px 37px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	min-width: auto;
 }
 
 .dislikeBtn {
@@ -69,19 +84,31 @@ audio {
   background-color: rgba(0,0,0,0.4);
 }
 
-
 .modal-content {
-  background-color: #fefefe;
+  background-color: #F8F8F8;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 50%;
+  min-width: 300px;
+  width: 25%;
 }
 
+.modal-content > input {
+	border-radius: 30px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	margin-bottom: 15px;
+	padding: 5px 10px;
+	border-color: rgba(218, 223, 225, 0.3);
+}
+
+.modal-content > input[type="submit"] {
+	font-size: 20px;
+}
 
 .close {
-  color: #aaaaaa;
+  color: #606368;
   float: right;
+  text-align: right;
   font-size: 28px;
   font-weight: bold;
 }

@@ -10,41 +10,41 @@
   <body>
   	<div class="container" ng-app="lvApp" ng-controller="lvCtrl">
   		<div class="row">
-  			<div class="col-8">
+  			<div class="col-xl-8 col-12">
   				<div class="row">
-  					<div class="col mt-md-5 bg-white p-0 elem">
+  					<div class="col mt-xl-5 p-0 elem mb-5">
   						<img src="/images/player.gif" id="player-gif"><span id="currentMusic"><br><br><br><br><br>PSY - GANGNAM STYLE(강남스타일) M/V</span>
-  						<div class="row">
-  							<div class="col-4 ml-5 mt-4">
+  						<div class="row subelem bg-white" id="brow">
+  							<div class="col-xl-4 col-12 mt-4 d-flex justify-content-center">
   								<i class="far fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-hide="isLiked"></i>
   								<i class="fas fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-show="isLiked"></i> {{likeNb}}
   								<i class="far fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-hide="isDisliked"></i>
   								<i class="fas fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-show="isDisliked"></i> {{dislikeNb}}
   							</div>
-	  						<div class="col-3"></div>
-	  						<div class="col-4"><button class="btn btn-primary mt-3" id="addSong"><i class="fas fa-plus"></i> Add Song</button></div>
+	  						<div class="col-xl-3 col-0"></div>
+	  						<div class="ml-xl-5 col-xl-4 col-12 d-flex justify-content-center" id="addSongw"><button class="btn btn-primary mt-3" id="addSong"><i class="fas fa-plus"></i> Add Song</button></div>
   						</div>
   					</div>
   				</div>
   			</div>
-  			<div class="col-4">
+  			<div class="col-xl-4 col-12 mt-5 mt-xl-0 mb-5">
   				<div class="row">
-  					<div class="col-lg-1 mt-xl-5"></div>
-  					<div class="col-12 col-md-11 mt-md-5 bg-white elem" id="playlist"><br>
+  					<div class="col-xl-1 mt-xl-5"></div>
+  					<div class="col-12 col-xl-11 mt-xl-5 bg-white elem subelem" id="playlist"><br>
   						Next song :<br><br><span id="songs">Luis Fonsi - Despacito ft. Daddy Yankee<br></span>
   					</div>
   				</div>
   			</div>
   		</div>
   		<div id="myModal" class="modal">		
-	  		<div class="modal-content">
+	  		<form class="modal-content">
 	  			<span class="close">&times;</span>
 	  			Artist:<br>
 	  			<input type="text" name="artist">
 	  			Song name:<br>
 	  			<input type="text" name="song"><br>
 	  			<input type="submit" name="submit" value="Send" class="btn btn-primary">
-	  		</div>
+	  		</form>
   		</div>
   	</div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>

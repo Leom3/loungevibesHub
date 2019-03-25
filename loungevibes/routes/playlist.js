@@ -56,13 +56,9 @@ function addYoutubeUrl(newSong) {
 }
 
 router.post('/addSong', function(req, res) {
-	json_response = {
-		code : 200,
-		msg : "request_success"
-	};
 	var track = req.body.track;
 	var artist = req.body.artist;
-	var dj = req.body.dj;
+	var dj = req.user.username;
 	var genre = "";
 
 	request('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=2b7bdafa672b6693eed5de92150b3f12&artist=' + artist + '&track=' + track + '&format=json'
@@ -126,16 +122,18 @@ router.get('/getPlaylist', function (req, res) {
     });
 });
 
-function addLikesToUser(data) {
-
-}
-
 router.post('/nextSong', function (req, res) {
 	if (db.collection("playlist").find()) {
 		db.collection("playlist").find().toArray(function (error, results) {
 			if (error) throw error;
-			console.log(req.user);
-			userLikes = results[0].likes;
+			songLikes = Number(results[0].likes);
+			addedLikes = songLikes + Number(req.user.likes);
+			req.user.likes = String(addedLikes);
+			req.user.save(function(err) {
+				if (err)
+					throw err;
+				return done(null, user);
+			});
 			Song.removeSongById(results[0]._id, function(err) {
 				if (err) {
 					throw err;

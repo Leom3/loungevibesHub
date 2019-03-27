@@ -49,7 +49,6 @@ function addYoutubeUrl(newSong) {
 		Song.addSongToPlaylist(newSong, function(err, song) {
 			if (err) {
 				throw err;
-				return false;
 			}
 		});
 	});
@@ -61,18 +60,21 @@ router.post('/addSong', function(req, res) {
 	var artist = req.body.artist;
 	var dj = req.user.username;
 	var genre = "";
+	var album = "";
 
 	request('http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=2b7bdafa672b6693eed5de92150b3f12&artist=' + artist + '&track=' + track + '&format=json'
 		, function(error, response, body) {
 			if (error) throw error;
 			bodyjson = JSON.parse(body);
 			if (bodyjson.error || bodyjson.track.duration == 0) {
-				return (res.json(error_json));
+				res.redirect('/');
+				return;
 			}
-			console.log(bodyjson.track.toptags);
-			var album = bodyjson.track.album.title;
+			console.log(bodyjson);
+			if (bodyjson.track.album != undefined)
+				album = bodyjson.track.album.title;
 			if (bodyjson.track.toptags.tag.length > 1)
-				var genre = bodyjson.track.toptags.tag[0].name;
+				genre = bodyjson.track.toptags.tag[0].name;
 
 			var newSong = new Song({
 				name : track,
@@ -84,7 +86,9 @@ router.post('/addSong', function(req, res) {
 				likes : "0"
 			});
 			addYoutubeUrl(newSong);
-			return(res.json(success_json));
+			req.flash('success_msg', 'You are registered and can now login');
+			res.redirect('/');
+			return;
 		});
 });
 
@@ -93,7 +97,6 @@ router.post('/removeSongById', function (req, res) {
 	Song.removeSongById(id, function(err) {
 		if (err) {
 			throw err;
-			res.json(error_json);
 		}
 	});
 	res.json(success_json);
@@ -136,7 +139,6 @@ router.post('/nextSong', function (req, res) {
 		Song.removeSongById(results[0]._id, function(err) {
 			if (err) {
 				throw err;
-				res.json(error_json);
 			}
 		});
 		res.json(success_json);

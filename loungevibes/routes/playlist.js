@@ -53,6 +53,7 @@ function addYoutubeUrl(newSong) {
 			}
 		});
 	});
+	return true;
 }
 
 router.post('/addSong', function(req, res) {
@@ -83,7 +84,7 @@ router.post('/addSong', function(req, res) {
 				likes : "0"
 			});
 			addYoutubeUrl(newSong);
-			res.json(success_json);
+			return(res.json(success_json));
 		});
 });
 
@@ -123,25 +124,34 @@ router.get('/getPlaylist', function (req, res) {
 });
 
 router.post('/nextSong', function (req, res) {
-	if (db.collection("playlist").find()) {
-		db.collection("playlist").find().toArray(function (error, results) {
-			if (error) throw error;
-			songLikes = Number(results[0].likes);
-			addedLikes = songLikes + Number(req.user.likes);
-			req.user.likes = String(addedLikes);
-			req.user.save(function(err) {
-				if (err)
-					throw err;
-				return done(null, user);
-			});
-			Song.removeSongById(results[0]._id, function(err) {
-				if (err) {
-					throw err;
-					res.json(error_json);
-				}
-			});
-			res.json(success_json);
-		})
-	}
+	db.collection("playlist").find().toArray(function (error, results) {
+		if (error) throw error;
+		if (results.length < 1) {
+			return (res.json(error_json));
+		}
+		songLikes = Number(results[0].likes);
+		addedLikes = songLikes + Number(req.user.likes);
+		req.user.likes = String(addedLikes);
+		db.collection("users").save(req.user);
+		Song.removeSongById(results[0]._id, function(err) {
+			if (err) {
+				throw err;
+				res.json(error_json);
+			}
+		});
+		res.json(success_json);
+	})
 })
 module.exports = router;
+
+router.post('/addLike', function(req, res) {
+	db.collection("playlist").find().toArray(function (error, results) {
+		if (error) throw error;
+		if (results.length < 1) {
+			return (res.json(error_json));
+		}
+		results[0].likes = String(Number(results[0].likes) + 1);
+		db.collection("playlist").save(results[0]);
+	})
+	res.json(success_json);
+})

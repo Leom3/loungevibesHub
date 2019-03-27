@@ -22,14 +22,12 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
         for (var id in data.data.data)
           videoId.push(data.data.data[id].youtubeId);
         if (videoId.length >= 1) {
-          console.log("Btn next song = encore des vid here");
           $scope.looper.player.cueVideoById({'videoId': videoId[0],
           'startSeconds': 0,
           'suggestedQuality': 'large'});
           $scope.looper.player.playVideo();
         }
         else {
-          console.log("Btn Next song = plus rien");
           $scope.looper.player.cueVideoById({'videoId': 'HpJP4nn5rYM',
           'startSeconds': 0,
           'suggestedQuality': 'large'});
@@ -81,7 +79,21 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
               $scope.looper.player.playVideo();
             }
           }, function errorCallback(response) {
-            console.log(response);
+            console.log("The request failed '/playlist/getPlaylist' : " + response);
+          });
+      }
+      else {
+        $http({
+          method: 'GET',
+          url: '/playlist/getPlaylist'
+        }).then(function successCallback(response) {
+            console.log("je guette les dislikes hihi")
+            if (response.data.data[0].dislikes >= 10) {
+              console.log("Aie Personne n'aime ta musique")
+              passNextSong();
+            }
+          }, function errorCallback(response) {
+            console.log("The request failed '/playlist/getPlaylist' : " + response);
           });
       }
     }, 5000)
@@ -113,14 +125,12 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
       for (var id in data.data.data)
         videoId.push(data.data.data[id].youtubeId);
       if (videoId.length >= 1) {
-        console.log("encore des vid here");
         player.cueVideoById({'videoId': videoId[0],
         'startSeconds': 0,
         'suggestedQuality': 'large'});
         player.playVideo();
       }
       else {
-        console.log("plus rien");
         player.cueVideoById({'videoId': 'HpJP4nn5rYM',
         'startSeconds': 0,
         'suggestedQuality': 'large'});

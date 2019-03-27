@@ -1,5 +1,5 @@
 var app = angular.module("lvApp", []);
-app.controller("lvCtrl", function($scope) {
+app.controller("lvCtrl", function($scope, $http) {
 	$scope.likeNb = 0;
 	$scope.dislikeNb = 0;
 	$scope.isLiked = false;
@@ -22,6 +22,13 @@ app.controller("lvCtrl", function($scope) {
 			$scope.isDisliked = false;
 		}
 	};
+	$http({
+		method: 'GET',
+		url: 'http://localhost:8080/playlist/getPlaylist'
+	}).then(function(response) {
+		$scope.playlist = response.data;
+		console.log($scope.playlist);
+	});
 });
 
 var modal = document.getElementById('myModal');

@@ -67,7 +67,7 @@ router.post('/addSong', function(req, res) {
 			if (error) throw error;
 			bodyjson = JSON.parse(body);
 			if (bodyjson.error || bodyjson.track.duration == 0) {
-				res.redirect('/');
+				res.redirect('/?valid=false');
 				return;
 			}
 			console.log(bodyjson);
@@ -83,11 +83,11 @@ router.post('/addSong', function(req, res) {
 				album : album,
 				dj : dj,
 				youtubeId : "",
-				likes : "0"
+				likes : "0",
+				dislikes : "0"
 			});
 			addYoutubeUrl(newSong);
-			req.flash('success_msg', 'You are registered and can now login');
-			res.redirect('/');
+			res.redirect('/?valid=true');
 			return;
 		});
 });
@@ -133,7 +133,7 @@ router.post('/nextSong', function (req, res) {
 			return (res.json(error_json));
 		}
 		songLikes = Number(results[0].likes);
-		addedLikes = songLikes + Number(req.user.likes);
+		addedLikes = songLikes + Number(req.user.likes);	
 		req.user.likes = String(addedLikes);
 		db.collection("users").save(req.user);
 		Song.removeSongById(results[0]._id, function(err) {
@@ -144,16 +144,37 @@ router.post('/nextSong', function (req, res) {
 		res.json(success_json);
 	})
 })
-module.exports = router;
 
 router.post('/addLike', function(req, res) {
 	db.collection("playlist").find().toArray(function (error, results) {
 		if (error) throw error;
-		if (results.length < 1) {
+		if (results.length < 1)
 			return (res.json(error_json));
-		}
 		results[0].likes = String(Number(results[0].likes) + 1);
 		db.collection("playlist").save(results[0]);
 	})
 	res.json(success_json);
 })
+
+router.post('/addDislike', function(req, res) {
+	db.collection("playlist").find().toArray(function (error, results) {
+		if (error) throw error;
+		if (results.length < 1)
+			return (res.json(error_json));
+		results[0].dislikes = String(Number(results[0].dislikes) + 1);
+		db.collection("playlist").save(results[0]);
+	})
+	res.json(success_json);	
+})
+
+router.get('/getBestDj', function(req, res) {
+	db.collection("users").find().sort({ likes: -1}).toArray(function(error, results) {
+		var json_data = results;
+        var json_response = {
+        	code : 200,
+        	data : json_data
+        };
+        res.json(json_response);
+	});
+})
+module.exports = router;

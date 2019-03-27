@@ -28,6 +28,9 @@ var SongSchema = new Schema({
 	},
 	likes : {
 		type : String
+	},
+	dislikes : {
+		type : String
 	}
 }, { usePushEach: true });
 

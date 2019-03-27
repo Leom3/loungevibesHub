@@ -1,7 +1,7 @@
 // Create your app with 'youtube-embed' dependency
 var myApp = angular.module('myApp', ['youtube-embed']);
 // Inside your controller...
-myApp.controller('MyCtrl', function ($scope, $http, $interval) {
+myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
 
   $scope.looper = {
     video: 'HpJP4nn5rYM',
@@ -12,9 +12,59 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval) {
     }
   };
 
+  $scope.buttonState = false;
+
+  $scope.passNextSong = function() {
+    if (videoId.length >= 1) {
+      videoId = [];
+      response = skipSong();
+      response.then(function(data) {
+        for (var id in data.data.data)
+          videoId.push(data.data.data[id].youtubeId);
+        if (videoId.length >= 1) {
+          console.log("Btn next song = encore des vid here");
+          $scope.looper.player.cueVideoById({'videoId': videoId[0],
+          'startSeconds': 0,
+          'suggestedQuality': 'large'});
+          $scope.looper.player.playVideo();
+        }
+        else {
+          console.log("Btn Next song = plus rien");
+          $scope.looper.player.cueVideoById({'videoId': 'HpJP4nn5rYM',
+          'startSeconds': 0,
+          'suggestedQuality': 'large'});
+          $scope.looper.player.playVideo();
+        }
+      })
+  }
+  };
+
+  $scope.clearPlaylist = function() {
+    if (videoId.length >= 1) {
+      $scope.buttonState = true;
+      response = getSong();
+      response.then(function(data) {
+        videoId = [];
+        for (var id in data.data.data)
+          videoId.push(data.data.data[id].youtubeId);
+      })
+      $timeout(function() {
+        videoId.forEach(function(item, index, array) {
+          response = skipSong();
+        });
+        videoId = [];
+        console.log("BTN ClearPlaylist = plus rien");
+        $scope.looper.player.cueVideoById({'videoId': 'HpJP4nn5rYM',
+        'startSeconds': 0,
+        'suggestedQuality': 'large'});
+        $scope.looper.player.playVideo();
+        $scope.buttonState = false;
+    }, 5000);
+  }
+  };
+
   var videoId = [];
 
-  if (videoId.length < 1) {
     var intervalId = $interval(function () {
       console.log(videoId);
       if (videoId.length < 1) {
@@ -35,11 +85,16 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval) {
           });
       }
     }, 5000)
-  }
 
   $scope.$on('$destroy', function () {
     window.clearInterval(intervalId)
   })
+
+  function getSong() {
+    var promise = null;
+    promise = ($http.get('http://localhost:8080/playlist/getPlaylist'));
+    return (promise);
+  }
 
   function skipSong() {
     var promise = null;

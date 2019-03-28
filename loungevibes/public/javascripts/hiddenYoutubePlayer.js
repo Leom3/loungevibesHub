@@ -128,7 +128,7 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
 
   function getSong() {
     var promise = null;
-    promise = ($http.get('http://localhost:8080/playlist/getPlaylist'));
+    promise = ($http.get('/playlist/getPlaylist'));
     return (promise);
   }
 
@@ -138,7 +138,7 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
       method: 'POST',
       url: '/playlist/nextSong'
     });
-    promise = ($http.get('http://localhost:8080/playlist/getPlaylist'));
+    promise = ($http.get('/playlist/getPlaylist'));
     return (promise);
   }
 

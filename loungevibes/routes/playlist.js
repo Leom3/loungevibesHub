@@ -58,7 +58,10 @@ function addYoutubeUrl(newSong) {
 router.post('/addSong', function(req, res) {
 	var track = req.body.track;
 	var artist = req.body.artist;
-	var dj = req.user.username;
+	if (req.user != undefined)
+		var dj = req.user.username;
+	else
+		var dj = "Unknown";
 	var genre = "";
 	var album = "";
 
@@ -127,10 +130,12 @@ router.get('/getPlaylist', function (req, res) {
 });
 
 function addSongToPassedSong(song) {
-	db.collection("playlist").insertOne(newSong, null, function (error, results) {
+	db.collection("passedSong").insertOne(song, null, function (error, results) {
 		if (error) throw error;
 		console.log("Song added");
+		return;
 	});
+	return;
 }
 
 router.post('/nextSong', function (req, res) {
@@ -182,8 +187,8 @@ router.post('/removeLike', function(req, res) {
 			return (res.json(error_json));
 		results[0].likes = String(Number(results[0].likes) - 1);
 		db.collection("playlist").save(results[0]);
+		res.json(success_json);
 	})
-	res.json(success_json);
 })
 
 router.post('/removeDislike', function(req, res) {
@@ -193,14 +198,29 @@ router.post('/removeDislike', function(req, res) {
 			return (res.json(error_json));
 		results[0].dislikes = String(Number(results[0].dislikes) - 1);
 		db.collection("playlist").save(results[0]);
+		res.json(success_json);
 	})
-	res.json(success_json);	
 })
 
 router.get('/getBestDj', function(req, res) {
 	db.collection("users").find().sort({ likes: -1}).toArray(function(error, results) {
+		if (results.length < 1)
+			return (res.json(error_json));
 		var json_data = results;
         var json_response = {
+        	code : 200,
+        	data : json_data
+        };
+        res.json(json_response);
+	});
+})
+
+router.get('/getBestSongs', function(req, res) {
+	db.collection("passedSong").find().sort({likes : -1}).toArray(function(error, results) {
+		if (results.length < 1)
+			return (res.json(error_json));
+		var json_data = results;
+		var json_response = {
         	code : 200,
         	data : json_data
         };

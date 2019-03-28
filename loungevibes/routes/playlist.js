@@ -136,12 +136,12 @@ function addSongToPassedSong(song) {
 router.post('/nextSong', function (req, res) {
 	db.collection("playlist").find().toArray(function (error, results) {
 		if (error) throw error;
-		if (results.length < 1) {
+		if (results.length < 1 || req.user == undefined) {
 			return (res.json(error_json));
 		}
 		addSongToPassedSong(results[0]);
 		songLikes = Number(results[0].likes);
-		addedLikes = songLikes + Number(req.user.likes);	
+		addedLikes = songLikes + Number(req.user.likes);
 		req.user.likes = String(addedLikes);
 		db.collection("users").save(req.user);
 		Song.removeSongById(results[0]._id, function(err) {

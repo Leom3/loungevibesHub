@@ -10,36 +10,37 @@ app.controller("lvCtrl", function($scope, $http) {
 	$scope.likeNb = 0;
 	$scope.dislikeNb = 0;
 	$scope.isLiked = false;
-	$scope.isDisliked = false;//localStorage.getItem("is_disliked") === null ? false : localStorage.getItem("is_disliked");
+	$scope.isDisliked = false;
 	$scope.cArtist = "";
 	$scope.cName = "";
 	$scope.cAlbum = "";
 	$scope.cGenre = "";
 	$scope.like = function() {
-		if ($scope.isLiked === false ) {		
+		if ($scope.isLiked === false ) {
 			$scope.likeNb += 1;
 			$scope.isLiked = true;
 			localStorage.setItem("is_liked", true);
-		} else {			
+		} else {
 			$scope.likeNb -= 1;
 			$scope.isLiked = false;
 			localStorage.setItem("is_liked", false);
 		}
 	};
 	$scope.dislike = function() {
-		if ($scope.isDisliked === false ) {		
+		if ($scope.isDisliked === false ) {
 			$scope.dislikeNb += 1;
 			$scope.isDisliked = true;
+			localStorage.setItem("is_disliked", true);
 		} else {
 			$scope.dislikeNb -= 1;
 			$scope.isDisliked = false;
-			//localStorage.setItem("is_disliked", false);
+			localStorage.setItem("is_disliked", false);
 		}
 	};
 	$scope.getPlaylist = function() {
 		$http({
 			method: 'GET',
-			url: 'http://localhost:8080/playlist/getPlaylist'
+			url: '/playlist/getPlaylist'
 		}).then(function(response) {
 			$scope.playlist = response.data;
 			if ($scope.playlist.data.length === 0) {
@@ -65,7 +66,7 @@ app.controller("lvCtrl", function($scope, $http) {
 	$scope.sendSong = function() {
 		$http({
 			method: "POST",
-			url: "http://localhost:8080/playlist/addSong",
+			url: "/playlist/addSong",
 			data: { track: $scope.track, artist: $scope.artist}
 		}).then(function successCallback() {
 			alert("Song added");

@@ -12,7 +12,8 @@ const expressValidator = require('express-validator');
 
 var homeRouter = require('./routes/home');
 var usersRouter = require('./routes/users');
-var playlistRouter = require('./routes/playlist')
+var playlistRouter = require('./routes/playlist');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -67,6 +68,7 @@ app.use(passport.session());
 app.use('/', homeRouter);
 app.use('/users', usersRouter);
 app.use('/playlist', playlistRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

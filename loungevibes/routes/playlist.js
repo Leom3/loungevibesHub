@@ -126,12 +126,17 @@ router.get('/getPlaylist', function (req, res) {
     });
 });
 
+function addSongToPassedSong(song) {
+	console.log(song);
+}
+
 router.post('/nextSong', function (req, res) {
 	db.collection("playlist").find().toArray(function (error, results) {
 		if (error) throw error;
 		if (results.length < 1) {
 			return (res.json(error_json));
 		}
+		//addSongToPassedSong(results[0]);
 		songLikes = Number(results[0].likes);
 		addedLikes = songLikes + Number(req.user.likes);	
 		req.user.likes = String(addedLikes);

@@ -127,7 +127,10 @@ router.get('/getPlaylist', function (req, res) {
 });
 
 function addSongToPassedSong(song) {
-	console.log(song);
+	db.collection("playlist").insertOne(newSong, null, function (error, results) {
+		if (error) throw error;
+		console.log("Song added");
+	});
 }
 
 router.post('/nextSong', function (req, res) {
@@ -136,7 +139,7 @@ router.post('/nextSong', function (req, res) {
 		if (results.length < 1) {
 			return (res.json(error_json));
 		}
-		//addSongToPassedSong(results[0]);
+		addSongToPassedSong(results[0]);
 		songLikes = Number(results[0].likes);
 		addedLikes = songLikes + Number(req.user.likes);	
 		req.user.likes = String(addedLikes);
@@ -167,6 +170,28 @@ router.post('/addDislike', function(req, res) {
 		if (results.length < 1)
 			return (res.json(error_json));
 		results[0].dislikes = String(Number(results[0].dislikes) + 1);
+		db.collection("playlist").save(results[0]);
+	})
+	res.json(success_json);	
+})
+
+router.post('/removeLike', function(req, res) {
+	db.collection("playlist").find().toArray(function (error, results) {
+		if (error) throw error;
+		if (results.length < 1)
+			return (res.json(error_json));
+		results[0].likes = String(Number(results[0].likes) - 1);
+		db.collection("playlist").save(results[0]);
+	})
+	res.json(success_json);
+})
+
+router.post('/removeDislike', function(req, res) {
+	db.collection("playlist").find().toArray(function (error, results) {
+		if (error) throw error;
+		if (results.length < 1)
+			return (res.json(error_json));
+		results[0].dislikes = String(Number(results[0].dislikes) - 1);
 		db.collection("playlist").save(results[0]);
 	})
 	res.json(success_json);	

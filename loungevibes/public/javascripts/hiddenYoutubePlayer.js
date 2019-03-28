@@ -14,6 +14,30 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
 
   $scope.buttonState = false;
 
+  $scope.passNextSong_withoutRemove = function() {
+    response = getSong();
+    response.then(function(data) {
+      videoId = [];
+      console.log("AVANT LE FOR : " + videoId)
+      for (var id in data.data.data)
+        videoId.push(data.data.data[id].youtubeId);
+      console.log("Dans le FOR : " + videoId)
+      console.log("WITHOUT REMOVE : " + videoId)
+      if (videoId.length >= 1) {
+        $scope.looper.player.cueVideoById({'videoId': videoId[0],
+                                          'startSeconds': 0,
+                                          'suggestedQuality': 'large'});
+        $scope.looper.player.playVideo();
+      }
+      else {
+        $scope.looper.player.cueVideoById({'videoId': 'HpJP4nn5rYM',
+                                            'startSeconds': 0,
+                                            'suggestedQuality': 'large'});
+        $scope.looper.player.playVideo();
+      }
+    })
+  }
+
   $scope.passNextSong = function() {
     if (videoId.length >= 1) {
       videoId = [];
@@ -51,10 +75,9 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
           response = skipSong();
         });
         videoId = [];
-        console.log("BTN ClearPlaylist = plus rien");
         $scope.looper.player.cueVideoById({'videoId': 'HpJP4nn5rYM',
-        'startSeconds': 0,
-        'suggestedQuality': 'large'});
+                                          'startSeconds': 0,
+                                          'suggestedQuality': 'large'});
         $scope.looper.player.playVideo();
         $scope.buttonState = false;
     }, 5000);
@@ -87,10 +110,11 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
           method: 'GET',
           url: '/playlist/getPlaylist'
         }).then(function successCallback(response) {
-            console.log("je guette les dislikes hihi")
-            if (response.data.data[0].dislikes >= 10) {
-              console.log("Aie Personne n'aime ta musique")
-              passNextSong();
+            if (response.data.data.length < 1)
+              $scope.passNextSong_withoutRemove();
+            else if (videoId[0] != response.data.data[0].youtubeId || response.data.data[0].dislikes >= 10) {
+              console.log("Aie ta musique a été skipé OU Personne n'aime ta musique")
+              $scope.passNextSong_withoutRemove();
             }
           }, function errorCallback(response) {
             console.log("The request failed '/playlist/getPlaylist' : " + response);

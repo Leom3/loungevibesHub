@@ -165,8 +165,8 @@ router.post('/addLike', function(req, res) {
 			return (res.json(error_json));
 		results[0].likes = String(Number(results[0].likes) + 1);
 		db.collection("playlist").save(results[0]);
+		res.json(success_json);
 	})
-	res.json(success_json);
 })
 
 router.post('/addDislike', function(req, res) {
@@ -176,8 +176,8 @@ router.post('/addDislike', function(req, res) {
 			return (res.json(error_json));
 		results[0].dislikes = String(Number(results[0].dislikes) + 1);
 		db.collection("playlist").save(results[0]);
+		res.json(success_json);
 	})
-	res.json(success_json);	
 })
 
 router.post('/removeLike', function(req, res) {

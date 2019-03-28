@@ -67,7 +67,7 @@ router.post('/addSong', function(req, res) {
 			if (error) throw error;
 			bodyjson = JSON.parse(body);
 			if (bodyjson.error || bodyjson.track.duration == 0) {
-				res.redirect('/?valid=false');
+				res.redirect(400, '/');
 				return;
 			}
 			console.log(bodyjson);
@@ -87,7 +87,7 @@ router.post('/addSong', function(req, res) {
 				dislikes : "0"
 			});
 			addYoutubeUrl(newSong);
-			res.redirect('/?valid=true');
+			res.redirect(200, '/');
 			return;
 		});
 });

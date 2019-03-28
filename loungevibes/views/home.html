@@ -2,18 +2,23 @@
 <html>
   <head>
     <title>Loungevibes Home</title>
+    <style type="text/css">
+    	[ng\:cloak], [ng-cloak], .ng-cloak {
+    		display: none;
+    	}
+    </style>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" integrity="sha384-Mmxa0mLqhmOeaE8vgOSbKacftZcsNYDjQzuCOm6D02luYSzBG8vpaOykv9lFQ51Y" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/home.css' />
     <link rel="icon" type="image/png" href="/images/logo.png">
   </head>
   <body>
-  	<div class="container" ng-app="lvApp" ng-controller="lvCtrl">
+  	<div class="container" ng-app="lvApp" ng-controller="lvCtrl" ng-cloak>
   		<div class="row">
   			<div class="col-xl-8 col-12">
   				<div class="row">
   					<div class="col mt-xl-5 p-0 elem mb-5">
-  						<img src="/images/player.gif" id="player-gif"><span id="currentMusic"><br><br><br><br><br>PSY - GANGNAM STYLE(강남스타일) M/V</span>
+  						<img src="/images/player.gif" id="player-gif"><span id="currentMusic"><br><br><br><br>{{cArtist}} - {{cName}}<br>Album : {{cAlbum}}<br>Genre : {{cGenre}}</span>
   						<div class="row subelem bg-white" id="brow">
   							<div class="col-xl-4 col-12 mt-4 d-flex justify-content-center">
   								<i class="far fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-hide="isLiked"></i>
@@ -31,19 +36,19 @@
   				<div class="row">
   					<div class="col-xl-1 mt-xl-5"></div>
   					<div class="col-12 col-xl-11 mt-xl-5 bg-white elem subelem" id="playlist"><br>
-  						Next song :<br><br><span id="songs">Luis Fonsi - Despacito ft. Daddy Yankee<br></span>
+  						Next song :<br><br><span id="songs" ng-repeat="x in playlist.data" ng-if="$index > 0">{{x["artist"]}} - {{x["name"]}}<br></span>
   					</div>
   				</div>
   			</div>
   		</div>
   		<div id="myModal" class="modal">		
-	  		<form class="modal-content" action ="/playlist/addSong" method="post">
+	  		<form class="modal-content">
 	  			<span class="close">&times;</span>
 	  			Artist:<br>
-	  			<input type="text" name="artist">
+	  			<input type="text" name="artist" ng-model="artist">
 	  			Song name:<br>
-	  			<input type="text" name="track"><br>
-	  			<input type="submit" name="submit" value="Send" class="btn btn-primary">
+	  			<input type="text" name="track" ng-model="track"><br>
+	  			<input type="submit" name="submit" value="Send" class="btn btn-primary" ng-click="sendSong()">
 	  		</form>
   		</div>
   	</div>

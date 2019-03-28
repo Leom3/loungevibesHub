@@ -18,7 +18,7 @@
   			<div class="col-xl-8 col-12">
   				<div class="row">
   					<div class="col mt-xl-5 p-0 elem mb-5">
-  						<img src="/images/player.gif" id="player-gif"><span id="currentMusic"><br><br><br><br>{{cArtist}} - {{cName}}<br>Album : {{cAlbum}}<br>Genre : {{cGenre}}</span>
+  						<img src="/images/player.gif" id="player-gif"><span id="currentMusic"><br><br><br><br>{{cArtist}} - {{cName}}<br>{{cAlbum}}<br>{{cGenre}}</span>
   						<div class="row subelem bg-white" id="brow">
   							<div class="col-xl-4 col-12 mt-4 d-flex justify-content-center">
   								<i class="far fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-hide="isLiked"></i>
@@ -41,7 +41,7 @@
   				</div>
   			</div>
   		</div>
-  		<div id="myModal" class="modal">		
+  		<div id="myModal" class="modal">
 	  		<form class="modal-content">
 	  			<span class="close">&times;</span>
 	  			Artist:<br>

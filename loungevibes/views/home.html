@@ -21,10 +21,10 @@
   						<img src="/images/player.gif" id="player-gif"><span id="currentMusic"><br><br><br><br>{{cArtist}} - {{cName}}<br>{{cAlbum}}<br>{{cGenre}}</span>
   						<div class="row subelem bg-white" id="brow">
   							<div class="col-xl-4 col-12 mt-4 d-flex justify-content-center">
-  								<i class="far fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-hide="isLiked"></i>
-  								<i class="fas fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-show="isLiked"></i> {{likeNb}}
-  								<i class="far fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-hide="isDisliked"></i>
-  								<i class="fas fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-show="isDisliked"></i> {{dislikeNb}}
+  								<i class="far fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-hide="is_liked()"></i>
+  								<i class="fas fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-show="is_liked()"></i> {{likeNb}}
+  								<i class="far fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-hide="is_disliked()"></i>
+  								<i class="fas fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-show="is_disliked()"></i> {{dislikeNb}}
   							</div>
 	  						<div class="col-xl-3 col-0"></div>
 	  						<div class="ml-xl-5 col-xl-4 col-12 d-flex justify-content-center" id="addSongw"><button class="btn btn-primary mt-3" id="addSong"><i class="fas fa-plus"></i> Add Song</button></div>

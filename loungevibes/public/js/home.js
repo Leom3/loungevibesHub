@@ -9,32 +9,48 @@ app.controller("lvCtrl", function($scope, $http) {
 	$scope.track = "";
 	$scope.likeNb = 0;
 	$scope.dislikeNb = 0;
-	$scope.isLiked = false;
-	$scope.isDisliked = false;
+	$scope.isLiked = localStorage.getItem("liked") === null ? "false" : localStorage.getItem("liked");
+	$scope.isDisliked = localStorage.getItem("disliked") === null ? "false" : localStorage.getItem("disliked");
 	$scope.cArtist = "";
 	$scope.cName = "";
 	$scope.cAlbum = "";
 	$scope.cGenre = "";
 	$scope.like = function() {
-		if ($scope.isLiked === false ) {
+		if ($scope.isLiked === "false") {
 			$scope.likeNb += 1;
-			$scope.isLiked = true;
-			localStorage.setItem("is_liked", true);
+			$scope.isLiked = "true";
+			localStorage.setItem("liked", "true");
+			$http({
+				method: 'POST',
+				url: '/playlist/addLike'
+			});
 		} else {
 			$scope.likeNb -= 1;
-			$scope.isLiked = false;
-			localStorage.setItem("is_liked", false);
+			$scope.isLiked = "false";
+			localStorage.setItem("liked", "false");
+			$http({
+				method: 'POST',
+				url: '/playlist/removeLike'
+			});
 		}
 	};
 	$scope.dislike = function() {
-		if ($scope.isDisliked === false ) {
+		if ($scope.isDisliked === "false") {
 			$scope.dislikeNb += 1;
-			$scope.isDisliked = true;
-			localStorage.setItem("is_disliked", true);
+			$scope.isDisliked = "true";
+			localStorage.setItem("disliked", "true");
+			$http({
+				method: 'POST',
+				url: '/playlist/addDislike'
+			});
 		} else {
 			$scope.dislikeNb -= 1;
-			$scope.isDisliked = false;
-			localStorage.setItem("is_disliked", false);
+			$scope.isDisliked = "false";
+			localStorage.setItem("disliked", "false");
+			$http({
+				method: 'POST',
+				url: '/playlist/removeDislike'
+			});
 		}
 	};
 	$scope.getPlaylist = function() {
@@ -48,6 +64,12 @@ app.controller("lvCtrl", function($scope, $http) {
 				$scope.cName = "24/7 | Relax & Chill Your Soul, Cozy Vibes •";
 				$scope.cAlbum = "";
 				$scope.cGenre = "";
+				$scope.likeNb = 0;				
+				$scope.dislikeNb = 0;
+				$scope.isLiked = "false";
+				$scope.isDisliked = "false";
+				localStorage.setItem("liked", "false");
+				localStorage.setItem("disliked", "false");
 				return;
 			}
 			for (var i = 0;i < $scope.playlist.data.length;i+=1) {
@@ -58,6 +80,16 @@ app.controller("lvCtrl", function($scope, $http) {
 			$scope.cName = $scope.playlist.data[0].name;
 			$scope.cAlbum = "Album : " + $scope.playlist.data[0].album;
 			$scope.cGenre = "Genre : " + $scope.playlist.data[0].genre;
+			$scope.likeNb = Number($scope.playlist.data[0].likes);
+			$scope.dislikeNb = Number($scope.playlist.data[0].dislikes);
+			if ($scope.likeNb === 0) {
+				$scope.isLiked = "false";
+				localStorage.setItem("liked", "false");
+			}
+			if ($scope.dislikeNb === 0) {
+				$scope.isDisliked = "false";
+				localStorage.setItem("disliked", "false");
+			}
 			console.log($scope.playlist.data);
 		});
 	};
@@ -76,6 +108,12 @@ app.controller("lvCtrl", function($scope, $http) {
 			$scope.artist = "";
 			$scope.track = "";
 		});
+	};
+	$scope.is_liked = function() {
+		return $scope.isLiked === "true" ? true : false;
+	};
+	$scope.is_disliked = function() {
+		return $scope.isDisliked === "true" ? true : false;
 	};
 });
 

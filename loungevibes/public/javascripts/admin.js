@@ -23,7 +23,7 @@ app.controller("adminCtrl", function($scope, $http) {
 	$scope.removeSong = function(id) {
 		response = removeRequest(id);
     		response.then(function(data) {
-			console.log("OUI")
+			$scope.getPlaylist();
 		    });
 	}
 
@@ -33,14 +33,13 @@ app.controller("adminCtrl", function($scope, $http) {
 			url: '/playlist/getPlaylist'
 		}).then(function(response) {
 			$scope.playlist = response.data;
-			if ($scope.playlist.data.length >= 0) {
+			if ($scope.playlist.data.length > 0) {
 				for (var i = 0; i < $scope.playlist.data.length; i+= 1) {
 					$scope.playlist.data[i].artist = capitalize($scope.playlist.data[i].artist);
 					$scope.playlist.data[i].name = capitalize($scope.playlist.data[i].name);
 				}
 				$scope.cArtist = $scope.playlist.data[0].artist;
 				$scope.cName = $scope.playlist.data[0].name;
-				console.log($scope.playlist.data);
 			}
 		});
 	};

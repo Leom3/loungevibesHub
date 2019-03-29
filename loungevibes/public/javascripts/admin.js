@@ -5,11 +5,49 @@ function capitalize(str) {
 }
 
 var app = angular.module("adminApp", []);
-app.controller("adminCtrl", function($scope, $http) {
+app.controller("adminCtrl", function($scope, $http, $timeout) {
+	$scope.buttonState = false;
 	$scope.cArtist = "";
 	$scope.cName = "";
 
-	function removeRequest(id) {
+	function removeSongRequest() {
+		var promise = null;
+    		promise = ($http.post('/playlist/nextSong'));
+    		return (promise);
+	}
+
+	function getSongRequest() {
+		var promise = null;
+		promise = ($http.get('/playlist/getPlaylist'));
+		return (promise);
+	}
+
+	$scope.clearPlaylist = function() {
+		res = getSongRequest();
+		res.then(function(response) {
+			res = response.data
+			if (res.data.length >= 1) {
+				$scope.buttonState = true;
+				response = getSongRequest();
+				response.then(function(data) {
+					videoId = [];
+					for (var id in data.data.data)
+						videoId.push(data.data.data[id].youtubeId);
+				})
+				$timeout(function() {
+					videoId.forEach(function(item, index, array) {
+						response = removeSongRequest();
+						response.then(function(data) {
+							$scope.getPlaylist();
+						});
+					});
+				$scope.buttonState = false;
+				}, 5000);
+			}
+		});
+	};
+
+	function removeByIdRequest(id) {
 		var promise = null;
 		$http({
 		  method: 'POST',
@@ -21,7 +59,7 @@ app.controller("adminCtrl", function($scope, $http) {
 	      }
 
 	$scope.removeSong = function(id) {
-		response = removeRequest(id);
+		response = removeByIdRequest(id);
     		response.then(function(data) {
 			$scope.getPlaylist();
 		    });

@@ -15,7 +15,7 @@
   <body>
       <div class="container" ng-app="adminApp" ng-controller="adminCtrl" ng-cloak>
                 <div class="col-12 col-xl-11 mt-xl-5 bg-white elem subelem" id="playlist"><br>
-                  Playlist :<br><br><span id="songs" ng-repeat="x in playlist.data" >{{x["artist"]}} - {{x["name"]}} <input type="image" src="/images/error.png" name="removeSong"id="removeSong" ng-click="removeSong(x['_id'])"/><br></span>
+                  Playlist : <button ng-disabled="buttonState" ng-click="clearPlaylist()">Remove all songs</button> <br><br><span id="songs" ng-repeat="x in playlist.data" >{{x["artist"]}} - {{x["name"]}} <input type="image" src="/images/error.png" name="removeSong"id="removeSong" ng-disabled="buttonState" ng-click="removeSong(x['_id'])"/><br></span>
                 </div>
         </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>

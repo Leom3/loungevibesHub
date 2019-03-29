@@ -7,6 +7,7 @@ var app = angular.module("lvApp", []);
 app.controller("lvCtrl", function($scope, $http) {
 	$scope.artist = "";
 	$scope.track = "";
+	$scope.url = "";
 	$scope.likeNb = 0;
 	$scope.dislikeNb = 0;
 	$scope.isLiked = localStorage.getItem("liked") === null ? "false" : localStorage.getItem("liked");
@@ -90,16 +91,41 @@ app.controller("lvCtrl", function($scope, $http) {
 				$scope.isDisliked = "false";
 				localStorage.setItem("disliked", "false");
 			}
+			console.log("PLAYLIST")
 			console.log($scope.playlist.data);
 		});
 	};
 	$scope.getPlaylist();
 	setInterval($scope.getPlaylist, 5000);
+	$scope.getBestSongs = function() {
+		$http({
+			method: "GET",
+			url: "/playlist/getBestSongs"
+		}).then(function(response) {
+			$scope.songList = response.data;
+			console.log("SONGS")
+			console.log($scope.songList.data);
+		});
+	};
+	$scope.getBestSongs();
+	setInterval($scope.getBestSongs, 5000);
+	$scope.getBestDj = function() {
+		$http({
+			method: "GET",
+			url: "/playlist/getBestDj"
+		}).then(function(response) {
+			$scope.djList = response.data;
+			console.log("DJ")
+			console.log($scope.djList.data);
+		});
+	};
+	$scope.getBestDj();
+	setInterval($scope.getBestDj, 5000);	
 	$scope.sendSong = function() {
 		$http({
 			method: "POST",
 			url: "/playlist/addSong",
-			data: { track: $scope.track, artist: $scope.artist}
+			data: { track: $scope.track, artist: $scope.artist }
 		}).then(function successCallback() {
 			alert("Song added");
 			document.location="/";
@@ -109,11 +135,32 @@ app.controller("lvCtrl", function($scope, $http) {
 			$scope.track = "";
 		});
 	};
+	$scope.sendUrl = function() {
+		$http({
+			method: "POST",
+			url: "/playlist/addUrl",
+			data: { url: $scope.url }
+		}).then(function successCallback() {
+			alert("Song added");
+			document.location="/";
+		}, function errorCallback() {
+			alert("Invalid link");
+			$scope.url = "";
+		});
+	};
 	$scope.is_liked = function() {
 		return $scope.isLiked === "true" ? true : false;
 	};
 	$scope.is_disliked = function() {
 		return $scope.isDisliked === "true" ? true : false;
+	};
+	$scope.logout = function() {
+		$http({
+			method: "GET",
+			url: "/users/logout"
+		}).then(function successCallback() {
+			document.location = "/users/login";
+		});
 	};
 });
 

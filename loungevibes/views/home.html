@@ -12,8 +12,11 @@
     <link rel='stylesheet' href='/stylesheets/home.css' />
     <link rel="icon" type="image/png" href="/images/logo.png">
   </head>
-  <body>
-  	<div class="container" ng-app="lvApp" ng-controller="lvCtrl" ng-cloak>
+  <body ng-app="lvApp" ng-controller="lvCtrl" ng-cloak>
+  	<nav class="navbar navbar-dark bg-dark d-flex justify-content-center">
+  		<a href="#" id="lgBtn" ng-click="logout()">Logout</a>
+  	</nav>
+  	<div class="container">
   		<div class="row">
   			<div class="col-xl-8 col-12">
   				<div class="row">
@@ -22,9 +25,9 @@
   						<div class="row subelem bg-white" id="brow">
   							<div class="col-xl-4 col-12 mt-4 d-flex justify-content-center">
   								<i class="far fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-hide="is_liked()"></i>
-  								<i class="fas fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-show="is_liked()"></i> {{likeNb}}
+  								<i class="fas fa-thumbs-up fa-3x likeBtn" ng-click="like()" ng-show="is_liked()"></i> <span class="nb">{{likeNb}}</span>
   								<i class="far fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-hide="is_disliked()"></i>
-  								<i class="fas fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-show="is_disliked()"></i> {{dislikeNb}}
+  								<i class="fas fa-thumbs-down fa-3x dislikeBtn" ng-click="dislike()" ng-show="is_disliked()"></i><span class="nb">{{dislikeNb}}</span>
   							</div>
 	  						<div class="col-xl-3 col-0"></div>
 	  						<div class="ml-xl-5 col-xl-4 col-12 d-flex justify-content-center" id="addSongw"><button class="btn btn-primary mt-3" id="addSong"><i class="fas fa-plus"></i> Add Song</button></div>
@@ -32,23 +35,38 @@
   					</div>
   				</div>
   			</div>
-  			<div class="col-xl-4 col-12 mt-5 mt-xl-0 mb-5">
+  			<div class="col-xl-4 col-12 mt-5 mt-xl-0 mb-4">
   				<div class="row">
   					<div class="col-xl-1 mt-xl-5"></div>
-  					<div class="col-12 col-xl-11 mt-xl-5 bg-white elem subelem" id="playlist"><br>
-  						Next song :<br><br><span id="songs" ng-repeat="x in playlist.data" ng-if="$index > 0">{{x["artist"]}} - {{x["name"]}}<br></span>
+  					<div class="col-12 col-xl-11 mt-xl-5 bg-white elem subelem playlist"><br>
+  						Next song :<br><br><span class="list" ng-repeat="x in playlist.data" ng-if="$index > 0">{{x["artist"]}} - {{x["name"]}}<br></span>
   					</div>
+  				</div>
+  			</div>
+  		</div>
+  		<div class="row">
+  			<div class="col-12 col-xl-6 elem subelem bg-white mb-4 playlist"><br>Most liked songs :<br><br>
+  			<ol><span ng-repeat="y in songList.data"><li>{{y["artist"]}} - {{y["name"]}} ({{y["likes"]}} likes)</li><br></span></ol></div>
+  			<div class="col-12 col-xl-6 mb-4">
+  				<div class="row">
+  					<div class="col-xl-1"></div>
+  					<div class="col-12 col-xl-11 elem subelem bg-white playlist"><br>Best DJ's :<br><br>
+  					<ol><span ng-repeat="z in djList.data"><li>{{z["username"]}} ({{z["likes"]}} likes)</li><br></span></ol></div>
   				</div>
   			</div>
   		</div>
   		<div id="myModal" class="modal">
 	  		<form class="modal-content">
 	  			<span class="close">&times;</span>
-	  			Artist:<br>
+	  			Artist :<br>
 	  			<input type="text" name="artist" ng-model="artist">
-	  			Song name:<br>
+	  			Song name :<br>
 	  			<input type="text" name="track" ng-model="track"><br>
 	  			<input type="submit" name="submit" value="Send" class="btn btn-primary" ng-click="sendSong()">
+		  		<br><div style="text-align: center;font-size: 20px;">or</div><br>
+	  			YouTube URL :<br>
+	  			<input type="text" name="track" ng-model="url"><br>
+	  			<input type="submit" name="submit" value="Send" class="btn btn-primary" ng-click="sendUrl()">
 	  		</form>
   		</div>
   	</div>

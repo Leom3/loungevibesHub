@@ -95,6 +95,32 @@ router.post('/addSong', function(req, res) {
 		});
 });
 
+router.post('/addUrl', function (req, res) {
+	var url = req.body.url;
+	if (req.user != undefined)
+		var dj = req.user;
+
+	url = String(url);
+	id = url.slice(url.indexOf("="));
+	var newSong = new Song({
+		name : url,
+		artist : "",
+		genre : "",
+		album : "",
+		dj : dj,
+		youtubeId : id,
+		likes : "0",
+		dislikes : "0"
+	});
+	Song.addSongToPlaylist(newSong, function(err, song) {
+		if (err) {
+			throw err;
+		}
+	});
+	res.redirect(200, '/');
+	return;
+});
+
 router.post('/removeSongById', function (req, res) {
 	var id = req.body.id;
 	Song.removeSongById(id, function(err) {
@@ -130,10 +156,19 @@ router.get('/getPlaylist', function (req, res) {
 });
 
 function addSongToPassedSong(song) {
-	db.collection("passedSong").insertOne(song, null, function (error, results) {
-		if (error) throw error;
-		console.log("Song added");
-		return;
+	db.collection("passedSong").find().toArray(function (error, results) {
+		for (result in results) {
+			if (result.name == song.name && result.artist == song.artist) {
+				result.likes = String(Number(result.likes) + Number(song.likes));
+				db.collection("passedSong").save(result);
+				return;
+			}
+		}
+		db.collection("passedSong").insertOne(song, null, function (error, results) {
+			if (error) throw error;
+			console.log("Song added");
+			return;
+		});
 	});
 	return;
 }

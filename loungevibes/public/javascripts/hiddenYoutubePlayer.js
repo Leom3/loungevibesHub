@@ -4,7 +4,7 @@ var myApp = angular.module('myApp', ['youtube-embed']);
 myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
 
   $scope.looper = {
-    video: 'HpJP4nn5rYM',
+    video: '6RmqoubNRKQ',
     player: null,
     vars: {
       controls: 1,
@@ -30,7 +30,7 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
         $scope.looper.player.playVideo();
       }
       else {
-        $scope.looper.player.cueVideoById({'videoId': 'HpJP4nn5rYM',
+        $scope.looper.player.cueVideoById({'videoId': '6RmqoubNRKQ',
                                             'startSeconds': 0,
                                             'suggestedQuality': 'large'});
         $scope.looper.player.playVideo();
@@ -52,7 +52,7 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
           $scope.looper.player.playVideo();
         }
         else {
-          $scope.looper.player.cueVideoById({'videoId': 'HpJP4nn5rYM',
+          $scope.looper.player.cueVideoById({'videoId': '6RmqoubNRKQ',
           'startSeconds': 0,
           'suggestedQuality': 'large'});
           $scope.looper.player.playVideo();
@@ -75,7 +75,7 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
           response = skipSong();
         });
         videoId = [];
-        $scope.looper.player.cueVideoById({'videoId': 'HpJP4nn5rYM',
+        $scope.looper.player.cueVideoById({'videoId': '6RmqoubNRKQ',
                                           'startSeconds': 0,
                                           'suggestedQuality': 'large'});
         $scope.looper.player.playVideo();
@@ -155,7 +155,7 @@ myApp.controller('MyCtrl', function ($scope, $http, $interval, $timeout) {
         player.playVideo();
       }
       else {
-        player.cueVideoById({'videoId': 'HpJP4nn5rYM',
+        player.cueVideoById({'videoId': '6RmqoubNRKQ',
         'startSeconds': 0,
         'suggestedQuality': 'large'});
         player.playVideo();

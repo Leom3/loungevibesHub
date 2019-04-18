@@ -42,6 +42,7 @@ function addYoutubeUrl(newSong) {
 	}, function (err, data) {
 		if (err) {
 			console.error('Error: ' + err);
+			console.log(data);
 			return false;
 		}
 		if (data)
@@ -89,8 +90,11 @@ router.post('/addSong', function(req, res) {
 				likes : "0",
 				dislikes : "0"
 			});
-			addYoutubeUrl(newSong);
-			res.redirect(200, '/');
+			var check = addYoutubeUrl(newSong);
+			if (check == true)
+				res.redirect(200, '/');
+			else
+				res.redirect(400, '/');
 			return;
 		});
 });
@@ -101,7 +105,7 @@ router.post('/addUrl', function (req, res) {
 		var dj = req.user;
 
 	url = String(url);
-	id = url.slice(url.indexOf("="));
+	id = url.slice(url.indexOf("=") + 1);
 	var newSong = new Song({
 		name : url,
 		artist : "",

@@ -161,16 +161,16 @@ router.get('/getPlaylist', function (req, res) {
 
 function addSongToPassedSong(song) {
 	db.collection("passedSong").find().toArray(function (error, results) {
-		for (result in results) {
-			if (result.name == song.name && result.artist == song.artist) {
-				result.likes = String(Number(result.likes) + Number(song.likes));
-				db.collection("passedSong").save(result);
+		for (i in results) {
+			if (results[i].name == song.name && results[i].artist == song.artist) {
+				results[i].likes = String(Number(results[i].likes) + Number(song.likes));
+				db.collection("passedSong").save(results[i]);
 				return;
 			}
 		}
 		db.collection("passedSong").insertOne(song, null, function (error, results) {
 			if (error) throw error;
-			console.log("Song added");
+			console.log("Song added to passed song");
 			return;
 		});
 	});
